@@ -22,7 +22,11 @@ const Layout = async ({
                 <div className="w-40 shrink-0">
                     <picture className="block w-full">
                         <img
-                            src={avatars.getInitials(user.name, 200, 200).href}
+                            src={(() => {
+                                // Construct the avatar URL manually for server-side usage
+                                const { NEXT_PUBLIC_APPWRITE_HOST_URL, NEXT_PUBLIC_APPWRITE_PROJECT_ID } = process.env;
+                                return `${NEXT_PUBLIC_APPWRITE_HOST_URL}/avatars/initials?name=${encodeURIComponent(user.name)}&width=200&height=200&project=${NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
+                            })()} 
                             alt={user.name}
                             className="h-full w-full rounded-xl object-cover"
                         />

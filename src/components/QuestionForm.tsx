@@ -235,7 +235,7 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                         onChange={value => setFormData(prev => ({ ...prev, content: value || "" }))}
                         data-color-mode="dark"
                         preview="live"
-                        visibleDragBar={false}
+                        visibleDragbar={false}
                         hideToolbar={false}
                         height={300}
                     />

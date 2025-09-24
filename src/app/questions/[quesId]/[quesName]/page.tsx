@@ -169,12 +169,11 @@ const Page = async ({ params }: { params: { quesId: string; quesName: string } }
                         {question.attachmentId && (
                             <picture>
                                 <img
-                                    src={
-                                        storage.getFilePreview(
-                                            questionAttachmentBucket,
-                                            question.attachmentId
-                                        ).href
-                                    }
+                                    src={(() => {
+                                        // Construct the file preview URL manually for server-side usage
+                                        const { NEXT_PUBLIC_APPWRITE_HOST_URL, NEXT_PUBLIC_APPWRITE_PROJECT_ID } = process.env;
+                                        return `${NEXT_PUBLIC_APPWRITE_HOST_URL}/storage/buckets/${questionAttachmentBucket}/files/${question.attachmentId}/preview?project=${NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
+                                    })()}
                                     alt={question.title}
                                     className="mt-3 rounded-lg"
                                 />
@@ -194,7 +193,11 @@ const Page = async ({ params }: { params: { quesId: string; quesName: string } }
                         <div className="mt-4 flex items-center justify-end gap-1">
                             <picture>
                                 <img
-                                    src={avatars.getInitials(author.name, 36, 36).href}
+                                    src={(() => {
+                                        // Construct the avatar URL manually for server-side usage
+                                        const { NEXT_PUBLIC_APPWRITE_HOST_URL, NEXT_PUBLIC_APPWRITE_PROJECT_ID } = process.env;
+                                        return `${NEXT_PUBLIC_APPWRITE_HOST_URL}/avatars/initials?name=${encodeURIComponent(author.name)}&width=36&height=36&project=${NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
+                                    })()} 
                                     alt={author.name}
                                     className="rounded-lg"
                                 />

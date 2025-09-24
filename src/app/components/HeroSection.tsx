@@ -26,7 +26,9 @@ export default async function HeroSection() {
                 // Only get file preview if attachmentId exists
                 if (q.attachmentId) {
                     try {
-                        thumbnail = storage.getFilePreview(questionAttachmentBucket, q.attachmentId).href;
+                        // Construct the file preview URL manually for server-side usage
+                        const { NEXT_PUBLIC_APPWRITE_HOST_URL, NEXT_PUBLIC_APPWRITE_PROJECT_ID } = process.env;
+                        thumbnail = `${NEXT_PUBLIC_APPWRITE_HOST_URL}/storage/buckets/${questionAttachmentBucket}/files/${q.attachmentId}/preview?project=${NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
                     } catch (error) {
                         console.log('Error getting file preview:', error);
                         thumbnail = defaultThumbnail;
